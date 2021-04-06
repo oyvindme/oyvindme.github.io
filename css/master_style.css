@@ -20,8 +20,8 @@ header,footer {
   background: rgba(0,51,102,1);
 }
 
-header > a:link, a:visited {
-  color: rgb(255,153,51);
+header > a {
+  color: rgb(255,153,51) !important;
 }
 
 header> h1, footer > h2 {
