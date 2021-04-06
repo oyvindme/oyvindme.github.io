@@ -1,0 +1,97 @@
+
+/* Define main text and background color */
+html, body, main {
+  font-family: Helvetica, Arial,sans-serif;
+  background: #DCDCDC;
+  text-align: center;
+}
+
+/* Remove "whitespace"/body background from header and footer */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+header,footer {
+  margin: 0 auto;
+  padding: 0.5%;
+  text-align: center;
+  color: rgb(255,153,51);
+  background: rgba(0,51,102,1);
+}
+
+header > a:link, a:visited {
+  color: rgb(255,153,51);
+}
+
+header> h1, footer > h2 {
+  margin-top: 0px;
+}
+
+footer > p {
+  margin-bottom: 0px;
+}
+
+h1 {
+  font-size: 150%;
+}
+
+h2 {
+  font-size: 140%;
+}
+
+h3 {
+  font-size: 130%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 110%;
+}
+
+.side_by_side {
+  color: rgb(255,153,51);
+  background-color: rgba(0,51,102,1);
+  box-sizing: border-box;
+
+  /*  To make divs side by side */
+  width: 48%;
+  display: inline-block;
+  height: 200px;
+  margin: 5px;
+  border: 10px solid #000000;
+  padding: 5em;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.divrow {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.divcol {
+  color: rgb(255,153,51);
+  background-color: rgba(0,51,102,1);
+  flex: 1; /* additionally, equal width */
+  padding: 5em;
+  border: 10px solid #000000;
+  margin: 5px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.divbody {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered_table {
+  margin-left: auto;
+  margin-right: auto;
+}

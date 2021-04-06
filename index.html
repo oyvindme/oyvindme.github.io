@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- HTML uses these kind of comments -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>My template page</title>
+    <link rel="stylesheet" href="css/master_style.css">
+  </head>
+  <body>
+    <header>
+      <h1> My first page </h1>
+      <nav>
+        <a href="#main_code">Main</a>
+        <a href="#table_heading">Table</a>
+        <!--<a href="/js/">JavaScript</a>
+        <a href="/python/">Python</a>-->
+      </nav>
+    </header>
+    <main>
+      <div class="divbody">
+        <h2 id="main_code">Main code</h2>
+        <p>This is my main code</p>
+        <figure>
+          <img src="./images/tester.png"
+               alt="Tester image"
+               style="width:50%">
+          <figcaption>Figure caption of test images</figcaption>
+        </figure>
+
+        <div class="side_by_side">
+          <h2>Left block</h2>
+          <p>With a paragraph</p>
+        </div>
+        <div class="side_by_side">
+          <h2>Right block</h2>
+          <p>With a different paragraph</p>
+        </div>
+        <div class="divrow">
+          <div class="divcol">
+            <h2>Left block</h2>
+            <p>With a paragraph</p>
+          </div>
+          <div class="divcol">
+            <h2>Right block</h2>
+            <p>With a different paragraph</p>
+          </div>
+        </div>
+
+        <h2 id="table_heading">A table </h2>
+        <table class="centered_table">
+          <tr>
+            <th>First column</th>
+            <th>Second column </th>
+            <th>Third column</th>
+          </tr>
+          <tr>
+            <td rowspan="2"> Blue</td>
+            <td>Green</td>
+            <td>Yellow</td>
+          </tr>
+          <tr>
+            <td>Yellow</td>
+            <td>Green</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center"> Long centered </td>
+            <td>Short</td>
+          </tr>
+        </table>
+      </div>
+    </main>
+    <footer>
+      <h2>Footer</h2>
+      <p>This is in a footer</p>
+    </footer>
+  </body>
+</html>
