@@ -20,7 +20,7 @@ header,footer {
   background: rgba(0,51,102,1);
 }
 
-header > a {
+header > a:active, a:hover, a:visited, a:link {
   color: rgb(255,153,51) !important;
 }
 
