@@ -3,6 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>My template page</title>
     <link rel="stylesheet" href="css/master_style.css">
   </head>
@@ -11,7 +12,7 @@
       <!-- <h1> My first page </h1> -->
       <nav>
         <a href="index.html">Home</a>
-        <a href="academic.html">Academic</a>
+        <a href="academic.html">Research</a>
         <a href="art.html">Art</a>
         <a class="active" href="test_page.html">Tester</a>
       </nav>
@@ -22,14 +23,28 @@
       </div> -->
     </header>
     <main>
+      <!-- <script>
+        alert("Hello")
+      </script>
+      <noscript>
+        Your browser does not support or have disabled JavaScript
+      </noscript> -->
       <div class="divbody">
         <h2 id="main_code">Main code</h2>
         <p>This is my main code</p>
         <figure>
+
           <img src="./images/tester.png"
-               alt="Tester image"
-               style="width:50%">
+               class="my_size"
+               alt="Tester image">
           <figcaption>Figure caption of test images</figcaption>
+
+          <a target="_blank" href="./images/tester.png">
+            <img src="./images/tester.png" alt="Test" class="thumb">
+          </a>
+          <a target="_blank" href="./images/tester.png">
+            <img src="./images/tester.png" alt="Test" class="thumb">
+          </a>
         </figure>
 
         <!-- <div class="side_by_side">
@@ -40,12 +55,12 @@
           <h2>Right block</h2>
           <p>With a different paragraph</p>
         </div> -->
-        <div class="divrow">
-          <div class="divcol">
+        <div class="divrow_test">
+          <div class="divcol_test">
             <h2>Left block</h2>
             <p>With a paragraph</p>
           </div>
-          <div class="divcol">
+          <div class="divcol_test">
             <h2>Right block</h2>
             <p>With a different paragraph</p>
           </div>

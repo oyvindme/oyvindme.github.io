@@ -10,13 +10,6 @@ html, body, main {
 html, body {
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  padding-bottom: 2.5%;
 }
 
 header, footer {
@@ -25,24 +18,14 @@ header, footer {
   text-align: center;
   color: rgb(255,255,255);
   background: rgb(200, 85, 61);
-  width: 99%;
 }
 
 header {
-  margin: 0 0 2.5% 0;
-  /* margin-bottom: 2.5%; */
+  margin-bottom: 2.5%;
 }
 
 footer {
-  /* margin-top: 2.5%; */
-  margin-top: auto;
-  position: static;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* padding: 1rem;
-  background-color: #efefef; */
-  text-align: center;
+  margin-top: 2.5%;
 }
 
 header > nav > a{
@@ -54,7 +37,6 @@ header > nav > a{
   color: rgb(255,255,255);
   overflow: hidden;
   margin: auto;
-  width: 10%;
 }
 
 header > nav a.active {
@@ -121,12 +103,69 @@ h5 {
 }
 
 .divbody {
-  width: 80%;
+  width: 60%;
+  min-width: 400px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.divbody figure {
+  display: inline-block;
 }
 
 .centered_table {
   margin-left: auto;
   margin-right: auto;
+}
+
+img.my_size {
+  width: 50%;
+  min-width: 350px;
+}
+
+/* Can use media querries like below to change the picture width based on screen size  */
+
+@media screen and (min-width:15cm) {
+  .divrow_test {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .divcol_test {
+    color: rgb(255,153,51);
+    background-color: rgba(0,51,102,1);
+    flex: 1;
+    padding: 10%;
+    border: 5px solid #000000;
+    margin: 5% 1% 5% 1%;
+
+  }
+}
+
+@media screen and (max-width:15cm) {
+  .divrow_test {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .divcol_test {
+    color: rgb(255,153,51);
+    background-color: rgba(0,51,102,1);
+    padding: 10%;
+    border: 5px solid #000000;
+    margin: 5% 1% 5% 1%;
+  }
+}
+
+.thumb {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  max-width:180px;
+}
+
+.thumb:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
