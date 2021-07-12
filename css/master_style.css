@@ -44,7 +44,7 @@ header > nav > a{
   /* font-weight: bold; */
   color: rgb(255,255,255);
   overflow: hidden;
-  font-size: 110%;
+  font-size: 125%;
   width: 5%;
   min-width: 150px;
 }
