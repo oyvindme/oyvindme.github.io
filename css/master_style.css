@@ -98,25 +98,16 @@ h5 {
   margin: 0 auto;
 }
 
-.divcol {
-  color: rgb(255,153,51);
-  background-color: rgba(0,51,102,1);
-  flex: 1; /* additionally, equal width */
-  padding: 10%;
-  border: 5px solid #000000;
-  /* margin: 5%; */
-  margin: 5% 1% 5% 1%;
-  /* margin: 5% auto;
-  margin-left: 1%;
-  margin-right: 1%; */
-  /* margin-top: 25%; */
-}
-
 .divbody {
   width: 80%;
   min-width: 420px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.divbody p, ol, ul {
+  text-align:  justify;
 }
 
 .divbody figure {
@@ -128,9 +119,34 @@ h5 {
   margin-right: auto;
 }
 
-img.my_size {
-  width: 50%;
-  min-width: 350px;
+.thumb {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  max-width:180px;
+}
+
+.thumb:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.full_width_img {
+  padding: 5px;
+  width: 100%;
+  max-width:650px;
+}
+
+.article {
+	counter-reset: figures;
+}
+
+.figure {
+	counter-increment: figures;
+}
+
+.figure figcaption:before {
+	content: 'Fig. ' counter(figures) ' - ';
 }
 
 /* Can use media querries like below to change the picture width based on screen size  */
@@ -153,6 +169,20 @@ img.my_size {
   }
 }
 
+.divcol {
+  color: rgb(255,153,51);
+  background-color: rgba(0,51,102,1);
+  flex: 1; /* additionally, equal width */
+  padding: 10%;
+  border: 5px solid #000000;
+  /* margin: 5%; */
+  margin: 5% 1% 5% 1%;
+  /* margin: 5% auto;
+  margin-left: 1%;
+  margin-right: 1%; */
+  /* margin-top: 25%; */
+}
+
 @media screen and (max-width:15cm) {
   .divrow_test {
     width: 90%;
@@ -166,16 +196,4 @@ img.my_size {
     border: 5px solid #000000;
     margin: 5% 1% 5% 1%;
   }
-}
-
-.thumb {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 5px;
-  width: 100%;
-  max-width:180px;
-}
-
-.thumb:hover {
-  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
