@@ -14,7 +14,8 @@ html, body {
 
 header, footer {
   margin: 0 auto;
-  padding: 0.5%;
+  padding: 0%;
+  /* padding: 0.5%; */
   text-align: center;
   color: rgb(255,255,255);
   background: rgb(200, 85, 61);
@@ -22,6 +23,7 @@ header, footer {
 
 header {
   margin-bottom: 2.5%;
+  /* margin-bottom: 2.5%;; */
 }
 
 footer {
