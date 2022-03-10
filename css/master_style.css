@@ -23,7 +23,7 @@ header, footer {
 
 header {
   margin-bottom: 0%;
-  /* margin-bottom: 2.5%;; */
+  /* margin-bottom: 2.5%; */
 }
 
 footer {
@@ -38,7 +38,8 @@ header > nav {
 }
 
 header > nav > a{
-  padding: 0.5% 1% 0.5% 1%;
+  /* padding: 0.5% 1% 0.5% 1%; */	
+  padding: 0%;
   text-decoration: none;
   text-align: center;
   display: inline-block;
