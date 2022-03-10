@@ -42,7 +42,7 @@ header > nav > a{
   text-decoration: none;
   text-align: center;
   display: inline-block;
-  margin: auto;
+  margin: 0;
   /* font-weight: bold; */
   color: rgb(255,255,255);
   overflow: hidden;
