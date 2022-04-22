@@ -4,6 +4,7 @@ html, body, main {
   font-family: Helvetica, Arial,sans-serif;
   /* background: rgb(255,255,255); */
   text-align: center;
+  overflow: scroll;
 }
 
 /* Remove "whitespace"/body background from header and footer */
