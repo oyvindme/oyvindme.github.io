@@ -6,7 +6,7 @@ html, body, main {
   text-align: center;
 }
 body {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 /* Remove "whitespace"/body background from header and footer */
