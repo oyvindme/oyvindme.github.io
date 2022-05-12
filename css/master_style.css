@@ -57,7 +57,7 @@ header > nav > a{
 }
 
 header > nav a.active, header > nav a:hover {
-  border: 2.5px solid #999DA0;
+  border: 3px solid #999DA0;
   color: #F2AA4CFF;
 }
 
