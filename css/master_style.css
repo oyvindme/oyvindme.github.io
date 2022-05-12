@@ -42,7 +42,7 @@ header > nav {
 }
 
 header > nav > a{
-  padding: 0.5% 1% 0.5% 1%;
+  padding: 0.15% 0.75% 0.15% 0.75%;
   text-decoration: none;
   text-align: center;
   display: inline-block;
@@ -52,7 +52,8 @@ header > nav > a{
   overflow: hidden;
   font-size: 125%;
   width: 5%;
-  min-width: 150px;
+  min-width: 130px;
+  border: 5px solid rgb(54,69,79);;
 }
 
 header > nav a.active {
