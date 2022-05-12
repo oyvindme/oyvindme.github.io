@@ -20,8 +20,8 @@ header, footer {
   padding: 0.5%;
   /* padding: 0.0%; */
   text-align: center;
-  color: rgb(255,255,255);
-  background: rgb(200, 85, 61);
+  color: rgb(54,69,79);
+  /* background: rgb(200, 85, 61); */
 }
 
 header {
@@ -55,18 +55,17 @@ header > nav > a{
 }
 
 header > nav a.active {
-  background-color: #ddd; /* #04AA6D */
-  color: rgb(200, 85, 61); /* white; */
+  /* background-color: #ddd;  */ /* #04AA6D */
+  /* color: rgb(200, 85, 61); */ /* white; */
+  border: 5px solid #999DA0;
+  color: #F2AA4CFF;
 }
 
 header > nav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-header > nav a.active {
-  background-color: #ddd; /* #04AA6D */
-  color: rgb(200, 85, 61); /* white; */
+  /* background-color: #ddd; */
+  /* color: black; */
+  border: 5px solid #999DA0;
+  color: #F2AA4CFF;
 }
 
 header> h1, footer > h2 {
