@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!-- HTML uses these kind of comments -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Frontpage">
+    <meta name="keywords" content="Biography">
+    <meta name="author" content="Øyvind Mortveit Ellingsen">
+    <title>VIV Calculation Tool</title>
+    <link rel="stylesheet" href="css/master_style.css">
+    <script type="text/javascript" src="./js/VIV.js"></script>
+    <!-- Temporary direct import of https://github.com/infusion/Complex.js -->
+    <script type="text/javascript" src="./js/complex.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="art.html">Art</a>
+        <a class="active" href="VIV.html">VIV Tool</a>
+        <!-- <a href="test_page.html">Tester</a> -->
+      </nav>
+    </header>
+    <main>
+      <div class="divbody">
+        <h1 id="main_code">VIV Calculation Tool</h1>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<!-- Chart setup based on https://stackoverflow.com/questions/70985874/how-do-you-use-user-input-as-data-values-in-chart-js -->
+        <div class="form-container"></div>
+        <div class="chart-container"><canvas id="myChart"></canvas></div>
+
+        <script type="text/javascript">
+          const color1 = 'rgb(166,206,227)';
+          const color2 = 'rgb(31,120,180)';
+          const color3 = 'rgb(178,223,138)';
+          const color4 = 'rgb(51,160,44)';
+          function generateSpeeds(vals) { // Dimensionless Speeds
+            for (let i = 0; i < speeds.length; i++) {
+              speeds[i] = vals[6] + speeds[i]*(vals[7]-vals[6])/(n-1);
+            }
+          }
+          function generateVBamp(vals, Re, Cl, St, speeds) {
+            let fn = vals[0];
+            let me = vals[1];
+            let fd = vals[2];
+            let fh = vals[3];
+            let zeta = vals[4];
+            let Iv = vals[5]/100;
+            for (let i = 0; i < speeds.length; i++) {
+              // Assuming "speeds" are Dimensionless speeds
+              VBamp[i] = {x: speeds[i], y: VIV_V_and_B (fn, me, fd, fh, zeta, Iv, Cl, St, speeds[i], Re)};
+            }
+          }
+          function generateWOamp(vals, Cd, Cl, St, speeds, Re, Cm=1, rho_f=1.225) { // VIV Wake Oscillator model
+            let fn = vals[0];
+            let me = vals[1];
+            let fd = vals[2];
+            let fh = vals[3];
+            let zeta = vals[4]/100; // Given as percentage
+            let Iv = vals[5]/100; // Given as percentage
+            let fCd = Cd*5/3;
+            let fCl = Cl*2**(0.5);
+            let mu = (Cm*rho_f*fd**2*Math.PI/4 + me) / (rho_f*fd**2);
+            let fM   = fCl/2/mu/8/(Math.PI)**2/St**2;
+            let fA1  = Cd; // For cylinders at least
+            let gamma = fA1/4/Math.PI/St;
+            let fD   = 2*zeta + gamma/mu;
+            let feps = 0.7;
+            var amps;
+            var fA;
+            if (Re>5e5){
+              fA = 15;
+            } else {
+              fA = 10;
+            }
+            console.log(zeta, gamma, mu);
+            for (let i = 0; i < speeds.length; i++) {
+              // Assuming "speeds" are Dimensionless speeds
+              amps =  facc_amp(speeds[i]*(1-Iv), fM, fD, fA, feps);
+              WOamp1[i] = {x: speeds[i], y: amps[0]};
+              WOamp2[i] = {x: speeds[i], y: amps[1]};
+              WOamp3[i] = {x: speeds[i], y: amps[2]};
+            }
+          }
+          function genData(vals){
+            plot_VB_VIV_checkbox = document.getElementById('plot_VB_VIV');
+            plot_WO_VIV_checkbox = document.getElementById('plot_WO_VIV');
+            speeds = [...Array(n).keys()];
+            generateSpeeds(vals);
+            let nu = 1.5e-5;
+            let [Re, St] = get_Re_and_St(vals[2], vals[0], nu)
+            let [Cd, Cl] = get_Cd_and_Cl(Re, vals[3], vals[2]); // Re, fh, fd
+            // add if else to calclate amps or not
+            if (plot_VB_VIV_checkbox.checked){
+              VBamp = [...Array(n).keys()];
+              generateVBamp(vals, Re, Cl, St, speeds);
+            }
+
+            if (plot_WO_VIV.checked){
+              WOamp1 = [...Array(n).keys()];
+              WOamp2 = [...Array(n).keys()];
+              WOamp3 = [...Array(n).keys()];
+              generateWOamp(vals, Cl, Cd, St, speeds, Re);
+            }
+          }
+
+          const params=['fn [Hz]', 'm_e [kg/m]', 'd [m]', 'h [m]', 'zeta [%]', 'Tu [%]', '\u03C9qi', '\u03C9qe'];
+          const inits=[0.71, 322.6, 2.0, 35.5, 0.22, 6.0, 0.5, 1.5];
+          const ctx = document.getElementById('myChart');
+          const n   = 101 // Constant representing number of plot points
+          const cont=document.querySelector(".form-container");
+          cont.innerHTML=params.map((M,i)=>{
+            let m=M.toLowerCase();
+            return `<input type="text" name="${m}" placeholder="${M}" value="${inits[i]}"> ${M}`;
+          }).join("<br>");
+          cont.innerHTML += "<br> <input type='checkbox' id='plot_VB_VIV' name='VB_VIV' checked> <label for='plot_VB_VIV'>V&B VIV</label> <br>";
+          cont.innerHTML += "<input type='checkbox' id='plot_WO_VIV' name='WO_VIV' checked> <label for='plot_WO_VIV'>WO VIV</label> <br>";
+          cont.innerHTML += "<input type='checkbox' id='plot_TIV' name='TIV' checked> <label for='plot_TIV'>TIV</label> <br>";
+          cont.innerHTML += " <input type='checkbox' id='plot_GALL' name='GALL' checked> <label for='plot_GALL'>Galloping</label> <br>";
+
+          var inps
+          var vals
+          var speeds;
+          var VBamp;
+          var WOamp;
+          var checkbox
+          inps = [...document.querySelectorAll("input")];
+          vals = inps.map(el=>+el.value);
+          genData(vals);
+          // cont.addEventListener("input",ev=>{
+          //  myChart.data.datasets[0].data= inps.map(el=>+el.value);Mz
+          //  myChart.update()
+          //});
+          const myChart = new Chart( ctx, {
+            type: 'scatter',
+              data: {
+                // labels: speeds,
+                datasets: [{
+                  label: 'V&B VIV',
+                  data: VBamp,
+                  borderColor: color1,
+                  backgroundColor: color1,
+                  showLine : true,
+                  fill: false,
+                  tension: 0,
+                  spanGaps: false,
+                  pointRadius: 0,
+                  hidden: false
+                },
+                { label: 'Wake VIV Lo',
+                  data: WOamp3,
+                  borderColor: color2,
+                  backgroundColor: color2,
+                  showLine : true,
+                  fill: false,
+                  tension: 0,
+                  spanGaps: false,
+                  pointRadius: 0,
+                  hidden: false,
+                  borderDash: [10, 3 ],
+                },
+                { label: 'Wake VIV Up',
+                  data: WOamp1,
+                  borderColor: color2,
+                  backgroundColor: color2,
+                  showLine : true,
+                  fill: false,
+                  tension: 0,
+                  spanGaps: false,
+                  pointRadius: 0,
+                  hidden: false
+                },
+                { label: 'Wake VIV Un',
+                  data: WOamp2,
+                  borderColor: color2,
+                  backgroundColor: color2,
+                  showLine : true,
+                  fill: false,
+                  tension: 0,
+                  spanGaps: false,
+                  pointRadius: 0,
+                  hidden: false,
+                  borderDash: [2, 5],
+                }
+              ]
+            },
+            options: {
+              // legend: {
+              //   display: {
+              //     filter: function(legendItem, chartData) {
+              //       if (legendItem.datasetIndex === 0) {
+              //         return false;
+              //       }
+              //       return true;
+              //     }
+              //   }
+              // },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  min:0,
+                  title: {
+                    display: true,
+                    text: 'Dimensionless Amplitude (Ry/d)'
+                  }
+                },
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Dimensionless Speed (\u03C9q)',
+                    ticks: {
+                      precision: 2
+                    },
+                  }
+                },
+              }
+            }
+          });
+          cont.addEventListener("input", ev=>{
+            updateGraph();
+            myChart.update()
+          });
+
+          function updateGraph() {
+            inps = [...document.querySelectorAll("input")];
+            vals = inps.map(el=>+el.value);
+            plot_VB_VIV_checkbox = document.getElementById('plot_VB_VIV');
+            plot_WO_VIV_checkbox = document.getElementById('plot_WO_VIV');
+            // console.log(plot_VB_VIV_checkbox.checked) // check if plotVIV_checkbox is ticked
+            genData(vals);
+            if (plot_VB_VIV_checkbox.checked){
+              myChart.data.datasets[0].data = VBamp;
+              myChart.data.datasets[0].hidden = false;
+            } else {
+              myChart.data.datasets[0].hidden = true;
+            }
+            if (plot_WO_VIV_checkbox.checked){
+              myChart.data.datasets[1].data = WOamp3;
+              myChart.data.datasets[1].hidden = false;
+              myChart.data.datasets[2].data = WOamp1;
+              myChart.data.datasets[2].hidden = false;
+              myChart.data.datasets[3].data = WOamp2;
+              myChart.data.datasets[3].hidden = false;
+            } else {
+              myChart.data.datasets[1].hidden = true;
+              myChart.data.datasets[2].hidden = true;
+              myChart.data.datasets[3].hidden = true;
+            }
+
+          }
+        </script>
+        <br>
+        <script type="text/javascript">
+          const a = Complex(-8,0).pow(1/3);
+          const b = Complex(-4,0).sqrt();
+          console.log(a,b)
+          console.log(Complex(1))
+          console.log(typeof a)
+          console.log(facc_amp(0.9, 0.0008297776310790165, 0.011913225581047628, 15, 0.7)) // fwq, fM, fD, fA, feps
+          document.write('Cube test 1: ' + a + '<br>'); // toPrecision(2) Should do the formatting before writing!
+          document.write('Sqrt test 1: ' + b + '<br>');
+        </script>
+      </div>
+    </main>
+  </body>
+</html>
