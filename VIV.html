@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Frontpage">
-    <meta name="keywords" content="Biography">
+    <meta name="keywords" content="VIV, Vortex-Induced Vibrations calculation tool, Vortex-Induced Vibrations, cylinder, amplitude response, speed response, chimney design, cylinder design, turbulence, tubulence-induced vibration, tubulence-induced vibration calculation tool">
     <meta name="author" content="Øyvind Mortveit Ellingsen">
     <title>VIV Calculation Tool</title>
     <link rel="stylesheet" href="css/master_style.css">
@@ -37,7 +37,7 @@
           const color4 = 'rgb(51,160,44)';
           function generateSpeeds(vals) { // Dimensionless Speeds
             for (let i = 0; i < speeds.length; i++) {
-              speeds[i] = vals[6] + speeds[i]*(vals[7]-vals[6])/(n-1);
+              speeds[i] = vals[6] + speeds[i]*(vals[7]-vals[6])/(n_points-1);
             }
           }
           function generateVBamp(vals, Re, Cl, St, speeds) {
@@ -74,7 +74,6 @@
             } else {
               fA = 10;
             }
-            console.log(zeta, gamma, mu);
             for (let i = 0; i < speeds.length; i++) {
               // Assuming "speeds" are Dimensionless speeds
               amps =  facc_amp(speeds[i]*(1-Iv), fM, fD, fA, feps);
@@ -86,29 +85,29 @@
           function genData(vals){
             plot_VB_VIV_checkbox = document.getElementById('plot_VB_VIV');
             plot_WO_VIV_checkbox = document.getElementById('plot_WO_VIV');
-            speeds = [...Array(n).keys()];
+            n_points = vals[8];
+            speeds = [...Array(n_points).keys()];
             generateSpeeds(vals);
             let nu = 1.5e-5;
             let [Re, St] = get_Re_and_St(vals[2], vals[0], nu)
             let [Cd, Cl] = get_Cd_and_Cl(Re, vals[3], vals[2]); // Re, fh, fd
             // add if else to calclate amps or not
             if (plot_VB_VIV_checkbox.checked){
-              VBamp = [...Array(n).keys()];
+              VBamp = [...Array(n_points).keys()];
               generateVBamp(vals, Re, Cl, St, speeds);
             }
 
             if (plot_WO_VIV.checked){
-              WOamp1 = [...Array(n).keys()];
-              WOamp2 = [...Array(n).keys()];
-              WOamp3 = [...Array(n).keys()];
+              WOamp1 = [...Array(n_points).keys()];
+              WOamp2 = [...Array(n_points).keys()];
+              WOamp3 = [...Array(n_points).keys()];
               generateWOamp(vals, Cl, Cd, St, speeds, Re);
             }
           }
 
-          const params=['fn [Hz]', 'm_e [kg/m]', 'd [m]', 'h [m]', 'zeta [%]', 'Tu [%]', '\u03C9qi', '\u03C9qe'];
-          const inits=[0.71, 322.6, 2.0, 35.5, 0.22, 6.0, 0.5, 1.75];
+          const params=['fn [Hz]', 'm_e [kg/m]', 'd [m]', 'h [m]', 'zeta [%]', 'Tu [%]', '\u03C9qi', '\u03C9qe', 'n_points'];
+          const inits=[0.71, 322.6, 2.0, 35.5, 0.22, 6.0, 0.5, 1.75, 101];
           const ctx = document.getElementById('myChart');
-          const n   = 101 // Constant representing number of plot points
           const cont=document.querySelector(".form-container");
           cont.innerHTML=params.map((M,i)=>{
             let m=M.toLowerCase();
@@ -119,8 +118,9 @@
           cont.innerHTML += "<input type='checkbox' id='plot_TIV' name='TIV' checked> <label for='plot_TIV'>TIV</label> <br>";
           cont.innerHTML += " <input type='checkbox' id='plot_GALL' name='GALL' checked> <label for='plot_GALL'>Galloping</label> <br>";
 
-          var inps
-          var vals
+          var n_points;
+          var inps;
+          var vals;
           var speeds;
           var VBamp;
           var WOamp;
@@ -228,7 +228,6 @@
             vals = inps.map(el=>+el.value);
             plot_VB_VIV_checkbox = document.getElementById('plot_VB_VIV');
             plot_WO_VIV_checkbox = document.getElementById('plot_WO_VIV');
-            // console.log(plot_VB_VIV_checkbox.checked) // check if plotVIV_checkbox is ticked
             genData(vals);
             if (plot_VB_VIV_checkbox.checked){
               myChart.data.datasets[0].data = VBamp;
@@ -256,7 +255,8 @@
         // document.write('Cube test 1: ' + a + '<br>'); // toPrecision(2) Should do the formatting before writing!
         // document.write('Sqrt test 1: ' + b + '<br>');
         </script>
-        <p style="text-align: center;"> For questions, please contact me on "o<!-- @ -->m<!-- . -->ell<!-- @ -->ingsen<!-- @ --><!-- @ -->@<!-- .. -->gm<!-- .. -->ail<!-- .. -->.<!-- .. -->c<!-- .. -->om".  </p>
+        <p style="text-align: center;"> Note: The inputs and equations only makes sense with positive numbers!
+        <br> For questions, please contact me on "o<!-- @ -->m<!-- . -->ell<!-- @ -->ingsen<!-- @ --><!-- @ -->@<!-- .. -->gm<!-- .. -->ail<!-- .. -->.<!-- .. -->c<!-- .. -->om".  </p>
 
       </div>
     </main>
