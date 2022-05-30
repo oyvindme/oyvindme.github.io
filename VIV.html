@@ -76,7 +76,7 @@
             }
             for (let i = 0; i < speeds.length; i++) {
               // Assuming "speeds" are Dimensionless speeds
-              amps =  facc_amp(speeds[i]*(1-Iv), fM, fD, fA, feps);
+              amps =  facc_amp(speeds[i], fM, fD, fA, feps);
               WOamp1[i] = {x: speeds[i], y: amps[0]};
               WOamp2[i] = {x: speeds[i], y: amps[1]};
               WOamp3[i] = {x: speeds[i], y: amps[2]};
