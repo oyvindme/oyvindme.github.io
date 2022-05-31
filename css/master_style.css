@@ -232,13 +232,13 @@ input {
   column-count: 2;
 }
 
-@media only screen and (min-width:600px) {
+@media only screen and (min-width:6.2cm) {
   .form-container {
     column-count: 1;
   }
 }
 
-@media only screen and (min-width:600px) {
+@media only screen and (min-width:6.2cm) {
   #myChart {
   	aspectRatio: 1.6;
   }
