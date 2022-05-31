@@ -232,6 +232,7 @@ input {
   column-count: 2;
 }
 
+/*
 @media only screen and (min-width:6.2cm) {
   .form-container {
     column-count: 1;
@@ -243,3 +244,4 @@ input {
   	aspectRatio: 1.6;
   }
 }
+*/
